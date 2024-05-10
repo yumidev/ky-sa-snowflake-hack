@@ -9,7 +9,7 @@ connection_parameters = {
    "account": os.getenv("SNOWFLAKE_ACCOUNT"),
    "user": os.getenv("SNOWFLAKE_USER"),
    "password": os.getenv("SNOWFLAKE_PASS"),
-   "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE")
+   "warehouse": os.getenv("SNOWFLAKE_WH")
  }
 
 session = Session.builder.configs(connection_parameters).create()  
