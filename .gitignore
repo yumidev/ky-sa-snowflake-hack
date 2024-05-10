@@ -1,3 +1,5 @@
+venv/
 __pycache__/
 sf-hack-env/
+oryx-build-commands.txt
 .env
