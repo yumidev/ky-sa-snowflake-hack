@@ -1,14 +1,21 @@
+"""
+This module serves as an entry point for the app.
+
+Run with: 
+streamlit run app.py
+"""
+
+import sys
 import streamlit as st
 
-import bot
+sys.path.insert(1, "./pages/")
+sys.path.insert(1, "./components/")
+from pages import Main
 
 st.set_page_config(
-    page_title="AI News",
+    page_title="Bellman - Your One-Stop Source for AI News",
     page_icon="🤖",
 )
 
-st.sidebar.success("Check your favorite articles.")
-
-st.title("Snowflake Hackathon")
-
-bot.add_ai_textbox()
+if __name__ == "__main__":
+    Main.show_page()
