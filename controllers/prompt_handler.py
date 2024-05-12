@@ -25,7 +25,7 @@ def get_cortex_response(summarize_text, request = default_request):
         raise ValueError("Prompt Handler did not receive a valid text for summarization.")
     
     summarize_text = summarize_text.replace("'", "\\'")
-    prompt = f"Summarize this text in one or two sentences: {summarize_text}"
+    prompt = f"{request} {summarize_text}"
     cortex_prompt = f"'[INST]{prompt}[INST]'"
     cortex_response = session.sql(f"select snowflake.cortex.complete('{chosen_model}', {cortex_prompt}) as response").to_pandas().iloc[0]['RESPONSE']
     return cortex_response
