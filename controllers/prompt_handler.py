@@ -17,7 +17,10 @@ connection_parameters = {
 session = Session.builder.configs(connection_parameters).create()  
 chosen_model = "snowflake-arctic"
 
-def get_cortex_response(summarize_text):
+summarize_request_str = "Summarize this text in one or two sentences:"
+default_request = summarize_prompt_str
+
+def get_cortex_response(summarize_text, request = default_request):
     if not summarize_text or not isinstance(summarize_text, str):
         raise ValueError("Prompt Handler did not receive a valid text for summarization.")
     
