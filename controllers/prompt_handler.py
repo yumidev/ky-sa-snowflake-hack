@@ -18,7 +18,7 @@ session = Session.builder.configs(connection_parameters).create()
 chosen_model = "snowflake-arctic"
 
 summarize_request_str = "Summarize this text in one or two sentences:"
-default_request = summarize_prompt_str
+default_request = summarize_request_str
 
 def get_cortex_response(summarize_text, request = default_request):
     if not summarize_text or not isinstance(summarize_text, str):

@@ -4,11 +4,11 @@ This module contains the card component where news articles are shown and given 
 
 import streamlit as st
 
-CARD_HEIGHT = 400
+CARD_HEIGHT = 300
 
 def NewsCard(column):
     sample_img = "statics/imgs/the-new-york-times-logo.jpg" #TODO: Remove this in final version as this is just for testing
 
     card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.image(sample_img)
-    card.title("Lorem Ipsum")
+    card.header("Lorem Ipsum")

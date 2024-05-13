@@ -4,10 +4,12 @@ This module contains the grid component that displays multiple NewsCards with ar
 import streamlit as st
 from components.news_card import NewsCard
 
+GRID_DIMENSIONS = (3,3)
+
 def NewsGrid():
-    cols = st.columns(3, gap="medium") # Create 3 columns
+    cols = st.columns(GRID_DIMENSIONS[1], gap="medium") # Create columns
 
     for col in cols:
         with col:
-            for _ in range(3):
-                NewsCard(col)
+            for _ in range(GRID_DIMENSIONS[0]):
+                NewsCard(col) # Row Card for each column
