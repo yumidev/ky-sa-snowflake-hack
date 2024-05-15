@@ -25,20 +25,28 @@ def get_articles_from_guardian():
     return response.json()
 
 
-def get_scraped_articles():
-    #FIXME
-    pass
-    # import pandas as pd
-    # from bs4 import BeautifulSoup
-    # from selenium import webdriver
-    # from selenium.webdriver.chrome.options import Options
+# def get_scraped_articles():
+#FIXME
+pass
+import pandas as pd
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service as FFService
+from selenium.webdriver.common.by import By
 
-    # options = Options()
-    # options.add_argument("--headless=new")
-    # driver = webdriver.Chrome(options=options)
-    # driver.get("https://sandbox.oxylabs.io/products")
-    # content = driver.page_source
-    # soup = BeautifulSoup(content, "html.parser")
-    # pass
+options = Options()
+options.add_argument("--headless")
+service = FFService(executable_path="/snap/bin/geckodriver")
+driver = webdriver.Firefox(options=options, service=service)
+driver.get('https://www.bbc.com/innovation/artificial-intelligence')
+blog_titles = driver.find_elements(By.CSS_SELECTOR, 'h2.bvDsJq')
+for title in blog_titles:
+    print(title.text)
+driver.quit()  # closing the browser
 
-    # driver.get("https://www.bbc.com/innovation/artificial-intelligence")
+# content = driver.page_source
+# soup = BeautifulSoup(content, "html.parser")
+# pass
+
+# driver.get("https://www.bbc.com/innovation/artificial-intelligence")
