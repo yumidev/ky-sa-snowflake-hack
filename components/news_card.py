@@ -14,4 +14,4 @@ def NewsCard(column, index):
     card.image(sample_img)
     
     card.header("Lorem Ipsum")
-    st.button('Read details', key=index, on_click=card_detail, kwargs=dict(idx=f'{index}'), help="See summary and key takeaways")
+    st.button('Read summary', key=index, on_click=card_detail, kwargs=dict(idx=f'{index}'), help="See summary and key takeaways")
