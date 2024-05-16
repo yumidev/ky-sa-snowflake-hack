@@ -9,7 +9,7 @@ GRID_DIMENSIONS = (3,3)
 def NewsGrid():
     cols = st.columns(GRID_DIMENSIONS[1], gap="medium") # Create columns
 
-    for col in cols:
+    for idx1, col in enumerate(cols):
         with col:
-            for _ in range(GRID_DIMENSIONS[0]):
-                NewsCard(col) # Row Card for each column
+            for idx2, _ in enumerate(range(GRID_DIMENSIONS[0])):
+                NewsCard(col, f'{idx1}{idx2}') # Row Card for each column
