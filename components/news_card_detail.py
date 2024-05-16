@@ -1,32 +1,21 @@
 import streamlit as st
+import streamlit.components.v1 as components
+
+text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in est rutrum, imperdiet ex et, lacinia mauris. Phasellus porttitor tristique nisi non tempor. Duis lacinia porta enim non consequat. In tellus nulla, rhoncus vitae mattis non, interdum in dolor. Suspendisse potenti. Etiam id arcu posuere, pellentesque justo ut, euismod orci. Curabitur nec odio et nunc interdum aliquet nec eu magna. Integer eget risus sed leo vestibulum viverra. Cras vel sapien mi. Vestibulum pretium lacinia cursus. Fusce ullamcorper interdum elit quis fringilla.'
 
 @st.experimental_dialog("Lorem Ipsum")
 def card_detail(idx):
     # TODO: Check if summary and key takeaways of this article exists in session state.
-    # If it exists, render it instead of summarize and key takeaways buttons
+    # If it exists, render it instead of calling snowflake arctic api
   
     st.write(f"Read article {idx}")
     sample_img = "statics/imgs/the-new-york-times-logo.jpg" #TODO: Remove this in final version as this is just for testing
-    st.image(sample_img)
+    st.image(sample_img)    
     
-    col1, col2 = st.columns([1,1])
-    with col1:
-        # button - summary button    
-        if st.button("Summarize"):
-            # TODO: Add the summary to session, so that it won't run summarize again
-            # st.session_state.card_detail = {"item": idx, "summary": "summary"}
-            # st.rerun()
-            st.write('Summarize clicked')
-    
-    with col2:
-        # button - key takeaways
-        if st.button("Key Takeaways"):
-            # TODO: Add the summary to session, so that it won't run summarize again
-            # TODO: Get from session_state
-            # st.session_state.card_detail = {"item": idx, "takeaways": "takeaways"}
-            st.write('Key Takeaways clicked')
-            
-        # reason = st.text_input("Because...")
-        # if st.button("Submit"):
-        #     st.session_state.vote = {"item": idx, "reason": reason}
-        #     st.rerun()
+    # TODO: Adjust the width of dialog
+    # TODO: Add line breaks to text
+    # TODO: Replace the text with result from arctic
+    st.header('Summary')
+    st.text(text)
+    st.header('Key Takeaways')
+    st.text(text)
