@@ -98,23 +98,3 @@ def get_rss_feed_data(url):
         articles.append(article)
     
     return articles
-
-
-def get_scraped_articles():
-    ## TODO: Complete this implementation
-    import pandas as pd
-    from bs4 import BeautifulSoup
-    from selenium import webdriver
-    from selenium.webdriver.firefox.options import Options
-    from selenium.webdriver.firefox.service import Service as FFService
-    from selenium.webdriver.common.by import By
-
-    options = Options()
-    options.add_argument("--headless")
-    service = FFService(executable_path="/snap/bin/geckodriver")
-    driver = webdriver.Firefox(options=options, service=service)
-    driver.get('https://www.bbc.com/innovation/artificial-intelligence')
-    blog_titles = driver.find_elements(By.CSS_SELECTOR, 'h2.bvDsJq')
-    for title in blog_titles:
-        print(title.text)
-    driver.quit()  # closing the browser
