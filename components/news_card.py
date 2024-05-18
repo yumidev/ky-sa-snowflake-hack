@@ -8,7 +8,7 @@ from components.news_card_detail import card_detail
 CARD_HEIGHT = 300
 
 def NewsCard(column, index):
-    sample_img = "statics/imgs/the-new-york-times-logo.jpg" #TODO: Remove this in final version as this is just for testing
+    sample_img = "statics/imgs/placeholder-image.jpg" #TODO: Remove this in final version as this is just for testing
 
     card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.image(sample_img)

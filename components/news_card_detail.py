@@ -12,7 +12,7 @@ def card_detail(idx):
     # If it exists, render it instead of calling snowflake arctic api
   
     st.write(f"Summary of article {idx}")
-    sample_img = "statics/imgs/the-new-york-times-logo.jpg" #TODO: Remove this in final version as this is just for testing
+    sample_img = "statics/imgs/placeholder-image.jpg" #TODO: Remove this in final version as this is just for testing
     st.image(sample_img)    
     
     # TODO: Adjust the width of dialog
