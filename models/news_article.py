@@ -9,3 +9,10 @@ class NewsArticle():
         self.link = link
         self.timestamp = timestamp
         self.thumbnail_url = thumbnail_url
+    
+    def __iter__(self):
+        yield "headline", self.headline
+        yield "summary", self.summary
+        yield "link", self.link
+        yield "timestamp", self.timestamp
+        yield "thumbnail_url", self.thumbnail_url
