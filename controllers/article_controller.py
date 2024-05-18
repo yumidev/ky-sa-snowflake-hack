@@ -57,6 +57,7 @@ def set_categories(articles:list[NewsArticle]) -> None:
         articles[i].category = CATEGORIES[largest_index]
 
 # Sample usage of functions
+# from controllers.api_handler import get_rss_feed_data
 # articles = get_rss_feed_data("https://feeds.a.dj.com/rss/RSSWSJD.xml")
 # filtered_articles = filter_articles_by_relevance(articles, "Artificial Intelligence")
 # set_categories(filtered_articles)
