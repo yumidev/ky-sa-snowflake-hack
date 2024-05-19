@@ -3,7 +3,9 @@ This module contains data associated with news articles.
 """
 
 class NewsArticle():
-    def __init__(self, headline, summary="", link="", timestamp="", thumbnail_url=""):
+    category:str = "" 
+
+    def __init__(self, headline:str, summary:str="", link:str="", timestamp:str="", thumbnail_url:str=""):
         self.headline = headline
         self.summary = summary
         self.link = link
