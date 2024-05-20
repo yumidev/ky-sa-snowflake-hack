@@ -7,6 +7,7 @@ from components.nav import Navbar
 from components.news_grid import NewsGrid
 
 from controllers.prompt_handler import get_cortex_response
+from controllers.db_handler import get_most_recent
 
 def get_generated_text():
     st.session_state["gen_text"] = get_cortex_response("Hello world!")
@@ -14,7 +15,7 @@ def get_generated_text():
 def show_page():
     Navbar()
     
-    st.title("Snowflake Hackathon")
+    st.title("Bellman AI")
 
     st.button("Get generated text", type="primary", on_click=get_generated_text)
 
@@ -22,4 +23,7 @@ def show_page():
         st.session_state["gen_text"] = ""
 
     st.write(st.session_state["gen_text"])
-    NewsGrid()
+
+    curated_articles = get_most_recent(9, table="article")
+
+    NewsGrid(curated_articles)
