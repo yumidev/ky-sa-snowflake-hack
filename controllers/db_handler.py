@@ -18,12 +18,12 @@ default_schema = article_schema
 default_table = "default_table"
 
 # TODO: Add read data from table function
-
 def init_connection():
     conn = st.connection("snowflake")
 
     return conn
-
+  
+  
 def show_table():
     session.table(default_table).show()
 
@@ -44,3 +44,4 @@ def get_most_recent(limit_count, table=default_table):
     response = conn.query(f"select * from {table} order by \"timestamp\" desc limit {limit_count}", ttl=600)
     recent_as_dicts = response.to_dict(orient="records")
     return recent_as_dicts
+
