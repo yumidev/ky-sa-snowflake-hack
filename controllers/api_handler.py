@@ -1,7 +1,7 @@
 import sys
 import os
 from dotenv import load_dotenv
-import datetime
+from datetime import datetime
 import requests
 import feedparser
 
@@ -11,14 +11,31 @@ from models.news_article import NewsArticle
 load_dotenv()
 
 rss_feeds = {
-    "bbc": "https://feeds.bbci.co.uk/news/technology/rss.xml",
-    "wsj": "https://feeds.a.dj.com/rss/RSSWSJD.xml",
-    "bloomberg": "https://feeds.bloomberg.com/technology/news.rss",
-    "forbes": "https://www.forbes.com/innovation/feed",
-    "mit": "https://cdn.technologyreview.com/stories.rss",
-    "ieee": "https://ieeetv.ieee.org/channel_rss/channel_7/rss",
-    "cnet": "https://www.cnet.com/rss/news/",
-    "verge": "https://www.theverge.com/rss/index.xml"
+    "BBC":{
+        "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+        "selector": "article > div > *",
+        "exclusions": ["sounds"]
+    },
+    "Wall Street Journal":{
+        "url": "https://feeds.a.dj.com/rss/RSSWSJD.xml"
+    },
+    "Bloomberg": {
+        "name": "Bloomberg",
+        "url": "https://feeds.bloomberg.com/technology/news.rss"
+    },
+    "Forbes": {
+        "url": "https://www.forbes.com/innovation/feed"
+    },
+    "MIT Technology Review": {},
+    "IEEE Spectrum": {
+        "url": "https://ieeetv.ieee.org/channel_rss/channel_7/rss"
+    },
+    "CNET": {
+        "url": "https://www.cnet.com/rss/news/"
+    },
+    "The Verge": {
+        "url": "https://www.theverge.com/rss/index.xml"
+    }  
 }
 
 def get_articles_from_guardian():
@@ -82,18 +99,21 @@ def get_articles_from_nyt():
     return articles
 
 
-def get_rss_feed_data(url):
+def get_rss_feed_data(source_name, url):
     feed = feedparser.parse(url)
 
     articles = []
 
     for entry in feed.entries:
+        timestamp = datetime.strptime(entry.get("published"), "%a, %d %b %Y %H:%M:%S %Z")
+        
         article = NewsArticle(
             headline=entry.get("title"),
             summary=entry.get("summary"),
             link=entry.get("link"),
-            timestamp=entry.get("published"),
-            thumbnail_url=entry.get("media_thumbnail", [{}])[0].get("url")
+            timestamp=timestamp,
+            thumbnail_url=entry.get("media_thumbnail", [{}])[0].get("url"),
+            source_name=source_name
         )
         articles.append(article)
     
