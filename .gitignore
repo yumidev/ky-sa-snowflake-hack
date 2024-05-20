@@ -5,4 +5,4 @@ statics/imgs/
 
 oryx-build-commands.txt
 .env
-
+.streamlit/secrets.toml
