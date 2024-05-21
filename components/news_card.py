@@ -5,7 +5,7 @@ This module contains the card component where news articles are shown and given 
 import streamlit as st
 from components.news_card_detail import card_detail
 
-CARD_HEIGHT = 350
+CARD_HEIGHT = 400
 
 def on_click_favorite(article_headline):
     if "favorites" not in st.session_state:
@@ -39,6 +39,9 @@ def preprocess_card_detail(article):
 def NewsCard(column, index, article):
     headline = article.get("headline")
     thumbnail_url = article.get("thumbnail_url")
+    source = article.get("source_name")
+    category = article.get("category")
+    
     col_summary, col_favorite = st.columns([3,1])
 
     with col_summary:
@@ -52,3 +55,7 @@ def NewsCard(column, index, article):
     card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.markdown(f"![Image - {headline}]({thumbnail_url})")
     card.markdown(f"### {headline}")
+    source_and_category = f''':gray[Source: {source}]  
+    :gray[#{category}]
+    '''
+    card.markdown(source_and_category)
