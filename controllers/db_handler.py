@@ -50,3 +50,9 @@ def get_articles_by_categories(limit_count, categories, table=default_table):
     response = conn.query(f"select * from {table} where \"category\" in ({categories}) order by \"timestamp\" desc limit {limit_count}", ttl=600)
     response_as_dict = response.to_dict(orient="records")
     return response_as_dict
+  
+def get_articles_by_headlines(limit_count, headlines, table=default_table):
+    conn = init_connection()
+    response = conn.query(f"select * from {table} where \"headline\" in ({headlines}) order by \"timestamp\" desc limit {limit_count}", ttl=600)
+    response_as_dict = response.to_dict(orient="records")
+    return response_as_dict

@@ -6,8 +6,6 @@ import streamlit as st
 from components.nav import Navbar
 from components.news_grid import NewsGrid
 from components.filter import CategoryFilter
-
-from controllers.prompt_handler import get_cortex_response
 from controllers.db_handler import get_most_recent
 
 def show_page():
@@ -21,4 +19,8 @@ def show_page():
 
     CategoryFilter()
 
-    NewsGrid()
+    if "articles" not in st.session_state:
+        st.session_state["articles"] = []
+    articles = st.session_state["articles"]
+
+    NewsGrid(articles)

@@ -4,16 +4,10 @@ This module contains the grid component that displays multiple NewsCards with ar
 import streamlit as st
 from components.news_card import NewsCard
 
-
-
 def cell_to_ordinal(row, col, num_columns):
     return (row * num_columns) + col
 
-# TODO: fix grid to handle any number of articles
-def NewsGrid():
-    if "articles" not in st.session_state:
-        st.session_state["articles"] = []
-    articles = st.session_state["articles"]
+def NewsGrid(articles):
     num_of_articles = len(articles)
     divided = divmod(num_of_articles, 3)
     num_of_rows = divided[0] 
