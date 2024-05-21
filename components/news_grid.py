@@ -9,7 +9,10 @@ GRID_DIMENSIONS = (3,3)
 def cell_to_ordinal(row, col, num_columns):
     return (col * num_columns) + row
 
-def NewsGrid(articles):
+def NewsGrid():
+    if "articles" not in st.session_state:
+        st.session_state["articles"] = []
+    articles = st.session_state["articles"]
     cols = st.columns(GRID_DIMENSIONS[1], gap="medium") # Create columns
 
     for col_idx, col in enumerate(cols):

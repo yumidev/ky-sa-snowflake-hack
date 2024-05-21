@@ -15,14 +15,10 @@ def show_page():
     
     st.title("Bellman AI")
 
-    if "gen_text" not in st.session_state:
-        st.session_state["gen_text"] = ""
-
-    st.write(st.session_state["gen_text"])
-
-    curated_articles = get_most_recent(9, table="article")
-    # print(f'curated_articles: {curated_articles}')
+    if "articles" not in st.session_state:
+        curated_articles = get_most_recent(9, table="article")
+        st.session_state["articles"] = curated_articles
 
     CategoryFilter()
 
-    NewsGrid(curated_articles)
+    NewsGrid()
