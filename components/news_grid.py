@@ -9,6 +9,7 @@ GRID_DIMENSIONS = (3,3)
 def cell_to_ordinal(row, col, num_columns):
     return (col * num_columns) + row
 
+# TODO: fix grid to handle any number of articles
 def NewsGrid():
     if "articles" not in st.session_state:
         st.session_state["articles"] = []
