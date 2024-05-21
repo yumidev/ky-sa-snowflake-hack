@@ -2,12 +2,16 @@
 This module is in charge of connecting with LLMs and exposing LLM output to the rest of the app.
 """
 import os
+import sys
 
 from dotenv import load_dotenv
 from snowflake.snowpark import Session
 import numpy as np
 from numpy import ndarray
 from sentence_transformers import SentenceTransformer
+
+sys.path.append(".")
+from utils.text_processing import clean_value
 
 load_dotenv()
 connection_parameters = {
@@ -25,9 +29,9 @@ default_request = summarize_request_str
 
 def get_cortex_response(user_input, request = default_request):
     if not user_input or not isinstance(user_input, str):
-        raise ValueError("Prompt Handler did not receive a valid text for summarization.")
+        raise ValueError("Prompt Handler did not receive a valid text.")
     
-    user_input_trimmed = user_input.replace("'", "\\'")
+    user_input_trimmed = clean_value(user_input)
     prompt = f"{request} {user_input_trimmed}"
     cortex_prompt = f"'[INST]{prompt}[INST]'"
     cortex_response = session.sql(f"select snowflake.cortex.complete('{chosen_model}', {cortex_prompt}) as response").to_pandas().iloc[0]['RESPONSE']

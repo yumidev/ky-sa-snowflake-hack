@@ -8,9 +8,8 @@ streamlit run app.py
 import sys
 import streamlit as st
 
-sys.path.insert(1, "./pages/")
-sys.path.insert(1, "./components/")
-from pages import Main
+sys.path.append(".")
+from pages.Main import show_page
 
 st.set_page_config(
     page_title="Bellman - Your One-Stop Source for AI News",
@@ -18,4 +17,4 @@ st.set_page_config(
 )
 
 if __name__ == "__main__":
-    Main.show_page()
+    show_page()
