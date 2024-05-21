@@ -9,6 +9,7 @@ sys.path.append(".")
 from models.news_article import NewsArticle
 from controllers.prompt_handler import get_class_relevance_scores, get_cortex_response
 from controllers.api_handler import rss_feeds
+from controllers.db_handler import get_one
 from utils.selenium_handler import get_selenium_driver
 
 driver = None
@@ -97,7 +98,19 @@ def articles_list_to_dataframe(articles):
     return pd.DataFrame(articles_as_dicts)
 
 
-def _get_article_content_thru_selenium(article, driver):
+def _get_article_content_thru_db(article):
+    db_article = get_one("headline", article.get("headline"), table="article")
+
+    if not db_article or not (set(article_prompts.keys()).issubset(set(db_article.keys()))):
+        return None
+    else:
+        keys_to_join = article_prompts.keys()
+        joined_content = " ".join([article.get(key) for key in keys_to_join])
+    
+    return joined_content
+    
+
+def _get_article_content_thru_selenium(article):
     # Get article content
     driver.get(article.get("link"))
     
@@ -123,8 +136,6 @@ def _get_article_content_thru_selenium(article, driver):
 
     # Combine all the article content
     article_content_str = article_content[0].text
-    # for element in article_content:
-        # article_content_str = article_content_str + element.text
 
     return article_content_str
 
@@ -154,18 +165,34 @@ def _get_article_content_thru_beatifulsoup(article):
 
 
 def get_article_content(article):
+    global driver
     article_content = None
 
-    article_content = _get_article_content_thru_beatifulsoup(article)
+    methods = [
+        _get_article_content_thru_db,
+        _get_article_content_thru_beatifulsoup,
+        _get_article_content_thru_selenium
+    ]
 
-    if article_content is None:
-        global driver
-        driver = get_selenium_driver()
+    method_names = [
+        "db",
+        "beautifulsoup",
+        "selenium"
+    ]
+
+    method_name = None
+    for i, method in enumerate(methods):
+        if article_content is None:
+            if method_names[i] == "selenium":
+                driver = get_selenium_driver()
         
-        if driver is not None:
-            return _get_article_content_thru_selenium(article, driver)
+                if driver is None:
+                    return None
     
-    return article_content
+            article_content = method(article)
+            method_name = method_names[i]
+
+    return (article_content, method_name)
 
 
 def get_ai_text(article_content, chosen_prompt=article_prompts["ai_summarize"]):

@@ -3,6 +3,7 @@ import streamlit as st
 
 sys.path.append(".")
 from controllers.prompt_handler import get_cortex_response
+from utils.text_processing import clean_value
 
 @st.experimental_fragment
 def chatbox(article_content):
@@ -22,7 +23,7 @@ def chatbox(article_content):
 
         st.session_state["messages"].append({"role": "user", "content": prompt})
 
-        article_content_cleaned = article_content.replace("'", "\\'")
+        article_content_cleaned = clean_value(article_content)
 
         response = get_cortex_response(prompt, f"{article_content_cleaned}\n\nUse the context above to answer the user\\'s question below to the best of your ability. Answer briefly and precisely.")
         with chat_container.chat_message("Bellman"):

@@ -10,12 +10,15 @@ import time
 
 sys.path.append(".")
 from controllers.article_controller import get_ai_text, get_article_content, article_prompts
+from controllers.db_handler import update_row
 from components.chatbox import chatbox
 
 
 @st.cache_data(show_spinner=False)
 def get_article_content_for_card(article):
-    return get_article_content(article)
+    article_content, method = get_article_content(article)
+
+    return article_content, method
 
 
 @st.cache_data(show_spinner=False)
@@ -30,9 +33,12 @@ def get_tab_texts(article_content):
 def load_detail_data_for_card(article, slot):
     progress_text = "Loading your Bellman-generated text..."
     my_bar = slot.progress(0, text=progress_text)
-    article_content = get_article_content_for_card(article)
+    article_content, content_method = get_article_content_for_card(article)
     my_bar.progress(50, progress_text)
     tab_texts = get_tab_texts(article_content)
+    my_bar.progress(75, progress_text)
+    if content_method != "db":
+        update_row("headline", article.get("headline"), tab_texts, table="article")
     time.sleep(0.01)
     my_bar.empty()
 
@@ -40,7 +46,7 @@ def load_detail_data_for_card(article, slot):
 
 
 @st.experimental_dialog("Article Insights", width="large")
-def card_detail(article, index):
+def card_detail(article):
     headline = article.get("headline")
     thumbnail_url = article.get("thumbnail_url")
 
