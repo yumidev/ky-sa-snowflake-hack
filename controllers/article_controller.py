@@ -101,11 +101,13 @@ def articles_list_to_dataframe(articles):
 def _get_article_content_thru_db(article):
     db_article = get_one("headline", article.get("headline"), table="article")
 
+
     if not db_article or not (set(article_prompts.keys()).issubset(set(db_article.keys()))):
         return None
     else:
         keys_to_join = article_prompts.keys()
-        joined_content = " ".join([article.get(key) for key in keys_to_join])
+
+        joined_content = " ".join([db_article.get(key, "") for key in keys_to_join])
     
     return joined_content
     

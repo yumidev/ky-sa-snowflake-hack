@@ -31,7 +31,7 @@ def get_tab_texts(article_content):
 
 @st.experimental_fragment
 def load_detail_data_for_card(article, slot):
-    progress_text = "Loading your Bellman-generated text..."
+    progress_text = "Loading your Bellman-generated insights..."
     my_bar = slot.progress(0, text=progress_text)
     article_content, content_method = get_article_content_for_card(article)
     my_bar.progress(50, progress_text)

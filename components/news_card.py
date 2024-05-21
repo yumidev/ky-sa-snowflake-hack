@@ -7,9 +7,9 @@ from components.news_card_detail import card_detail
 
 CARD_HEIGHT = 350
 
-def preprocess_card_detail(article, index):
+def preprocess_card_detail(article):
     st.session_state["messages"] = []
-    card_detail(article, index)
+    card_detail(article)
 
 
 def NewsCard(column, index, article):
@@ -19,7 +19,7 @@ def NewsCard(column, index, article):
 
     with col_summary:
         if st.button("View", key=index, help="See summary and key takeaways"):
-            preprocess_card_detail(article, index)
+            preprocess_card_detail(article)
     with col_favorite:
         st.button(':star:', key=f'{index}-favorite', help="Save in favorites")
 
