@@ -13,7 +13,7 @@ load_dotenv()
 rss_feeds = {
     "BBC":{
         "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
-        "selector": "article > div > *",
+        "selector": "article",
         "exclusions": ["sounds"]
     },
     "Wall Street Journal":{

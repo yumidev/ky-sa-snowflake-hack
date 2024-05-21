@@ -25,7 +25,7 @@ default_request = summarize_request_str
 
 def get_cortex_response(user_input, request = default_request):
     if not user_input or not isinstance(user_input, str):
-        raise ValueError("Prompt Handler did not receive a valid text for summarization.")
+        raise ValueError("Prompt Handler did not receive a valid text.")
     
     user_input_trimmed = user_input.replace("'", "\\'")
     prompt = f"{request} {user_input_trimmed}"

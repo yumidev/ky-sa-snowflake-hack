@@ -2,15 +2,48 @@
 This module contains the news card detail component where summary and key takeaways of news article is shown.
 """
 
+import sys
 import streamlit as st
 import streamlit.components.v1 as components
+import time
 
-text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in est rutrum, imperdiet ex et, lacinia mauris. Phasellus porttitor tristique nisi non tempor. Duis lacinia porta enim non consequat. In tellus nulla, rhoncus vitae mattis non, interdum in dolor. Suspendisse potenti. Etiam id arcu posuere, pellentesque justo ut, euismod orci. Curabitur nec odio et nunc interdum aliquet nec eu magna. Integer eget risus sed leo vestibulum viverra. Cras vel sapien mi. Vestibulum pretium lacinia cursus. Fusce ullamcorper interdum elit quis fringilla.'
 
-@st.experimental_dialog("Summary", width="large")
-def card_detail(headline, thumbnail_url):
-    # TODO: Check if summary and key takeaways of this article exists in session state.
-  
+sys.path.append(".")
+from controllers.article_controller import get_ai_text, get_article_content, article_prompts
+from components.chatbox import chatbox
+
+
+@st.cache_data(show_spinner=False)
+def get_article_content_for_card(article):
+    return get_article_content(article)
+
+
+@st.cache_data(show_spinner=False)
+def get_tab_texts(article_content):
+    tab_texts = {
+        purpose: get_ai_text(article_content, prompt) for purpose, prompt in article_prompts.items()
+    }
+
+    return tab_texts
+
+@st.experimental_fragment
+def load_detail_data_for_card(article, slot):
+    progress_text = "Loading your Bellman-generated text..."
+    my_bar = slot.progress(0, text=progress_text)
+    article_content = get_article_content_for_card(article)
+    my_bar.progress(50, progress_text)
+    tab_texts = get_tab_texts(article_content)
+    time.sleep(0.01)
+    my_bar.empty()
+
+    return tab_texts, article_content
+
+
+@st.experimental_dialog("Article Insights", width="large")
+def card_detail(article, index):
+    headline = article.get("headline")
+    thumbnail_url = article.get("thumbnail_url")
+
     st.header(headline)
     
     components.html(
@@ -22,14 +55,28 @@ def card_detail(headline, thumbnail_url):
         width=720,
         height=270
     )
-    
-    tab_summary, tab_takeaways, tab_justify = st.tabs(["Summary", "Takeaways", "Justify"])
+
+    slot_1 = st.empty()
+    slot_2 = st.empty()
+
+    if  slot_2.button("Close", key="button-close"):
+        st.rerun()
+
+    tab_texts, article_content = load_detail_data_for_card(article, slot_1)
+
+    tab_summary, tab_breakdown, tab_takeaways, tab_justify, tab_ask = slot_1.tabs(["Summary", "Breakdown", "Takeaways", "Justify", "Ask"])
 
     with tab_summary:
-        st.markdown(text)
+        st.markdown(tab_texts["ai_summarize"])
+
+    with tab_breakdown:
+        st.markdown(tab_texts["ai_explain"])
 
     with tab_takeaways:
-        st.markdown(text)
+        st.markdown(tab_texts["ai_takeaways"])
 
     with tab_justify:
-        st.markdown(text)
+        st.markdown(tab_texts["ai_justify"])
+    
+    with tab_ask:
+        chatbox(article_content)
