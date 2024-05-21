@@ -50,9 +50,6 @@ def show_page():
     favorites = st.session_state.favorites
 
     if len(favorites) > 0:
-        for headline in favorites:
-            escaped_string = escape_string(headline)
-        
         formatted_favorites = map(lambda h: f"'{escape_string(h)}'", favorites)
         str_favorites = ",".join(list(formatted_favorites))
         favorite_articles = get_articles_by_headlines(9, str_favorites, table="article")

@@ -17,7 +17,6 @@ article_schema = list(dict(article).keys())
 default_schema = article_schema
 default_table = "default_table"
 
-# TODO: Add read data from table function
 def init_connection():
     conn = st.connection("snowflake")
 
