@@ -55,11 +55,11 @@ def card_detail(article):
     components.html(
         f"""
         <div style="display: flex; justify-content: center;">
-          <img src="{thumbnail_url}" height="270">
+          <img src="{thumbnail_url}" height="180">
         </div>
         """,
         width=720,
-        height=270
+        height=200
     )
 
     slot_1 = st.empty()
