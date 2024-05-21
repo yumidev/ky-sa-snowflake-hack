@@ -21,3 +21,7 @@ class NewsArticle():
         yield "timestamp", self.timestamp
         yield "thumbnail_url", self.thumbnail_url
         yield "source_name", self.source_name
+        yield "category", self.category
+
+    def get(self, attribute, fallback_value=None):
+        return dict(self).get(attribute, fallback_value)
