@@ -18,9 +18,5 @@ def show_page():
         st.session_state["articles"] = curated_articles
 
     CategoryFilter()
-
-    if "articles" not in st.session_state:
-        st.session_state["articles"] = []
     articles = st.session_state["articles"]
-
     NewsGrid(articles)
