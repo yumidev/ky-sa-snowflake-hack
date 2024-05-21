@@ -26,4 +26,3 @@ def NewsCard(column, index, article):
     card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.markdown(f"![Image - {headline}]({thumbnail_url})")
     card.markdown(f"### {headline}")
-

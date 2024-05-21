@@ -12,6 +12,7 @@ from controllers.db_handler import get_most_recent
 def load_most_recent_articles():
     return get_most_recent(9, table="article")
 
+  
 def show_page():
     Navbar()
     
