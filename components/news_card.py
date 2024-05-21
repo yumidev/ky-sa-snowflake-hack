@@ -7,10 +7,34 @@ from components.news_card_detail import card_detail
 
 CARD_HEIGHT = 350
 
+def on_click_favorite(article_headline):
+    if "favorites" not in st.session_state:
+        st.session_state.favorites = [article_headline]
+    else:
+        if article_headline in st.session_state.favorites:
+            st.session_state.favorites.remove(article_headline)
+        else:
+            st.session_state.favorites.append(article_headline)
+
+def get_favorite_button_icon(article_headline):
+    if "favorites" not in st.session_state:
+        st.session_state.favorites = []
+    if article_headline in st.session_state.favorites:
+        return ":star:"
+    else:
+        return "☆"
+
+def get_help_text(article_headline):
+    if "favorites" not in st.session_state:
+        st.session_state.favorites = []
+    if article_headline in st.session_state.favorites:
+        return "Remove from favorites"
+    else:
+        return "Add to favorites"
+
 def preprocess_card_detail(article):
     st.session_state["messages"] = []
     card_detail(article)
-
 
 def NewsCard(column, index, article):
     headline = article.get("headline")
@@ -21,7 +45,9 @@ def NewsCard(column, index, article):
         if st.button("View", key=index, help="See summary and key takeaways"):
             preprocess_card_detail(article)
     with col_favorite:
-        st.button(':star:', key=f'{index}-favorite', help="Save in favorites")
+        help_text = get_help_text(headline)
+        icon = get_favorite_button_icon(headline)
+        st.button(icon, key=f'{index}-favorite', help=help_text, on_click=on_click_favorite, kwargs=dict(article_headline=headline), type="secondary")
 
     card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.markdown(f"![Image - {headline}]({thumbnail_url})")

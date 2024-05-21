@@ -24,5 +24,5 @@ def show_page():
         st.session_state["articles"] = curated_articles
 
     CategoryFilter()
-
-    NewsGrid()
+    articles = st.session_state["articles"]
+    NewsGrid(articles)
