@@ -16,13 +16,13 @@ def on_click_favorite(article_headline):
         else:
             st.session_state.favorites.append(article_headline)
     
-def get_button_type(article_headline):
-    if "favorites" not in st.session_state:
-        st.session_state.favorites = []
-    if article_headline in st.session_state.favorites:
-        return "primary"
-    else:
-        return "secondary"
+# def get_button_type(article_headline):
+#     if "favorites" not in st.session_state:
+#         st.session_state.favorites = []
+#     if article_headline in st.session_state.favorites:
+#         return "primary"
+#     else:
+#         return "secondary"
 
 def get_favorite_button_icon(article_headline):
     if "favorites" not in st.session_state:
@@ -55,10 +55,10 @@ def NewsCard(column, index, article):
             kwargs=detail_data,
             help="See summary and key takeaways")
     with col_favorite:
-        button_type = get_button_type(headline)
+        # button_type = get_button_type(headline)
         help_text = get_help_text(headline)
         icon = get_favorite_button_icon(headline)
-        st.button(icon, key=f'{index}-favorite', help=help_text, on_click=on_click_favorite, kwargs=dict(article_headline=headline), type=button_type)
+        st.button(icon, key=f'{index}-favorite', help=help_text, on_click=on_click_favorite, kwargs=dict(article_headline=headline), type="secondary")
 
     card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.markdown(f"![Image - {headline}]({thumbnail_url})")
