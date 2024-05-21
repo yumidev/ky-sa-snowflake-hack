@@ -12,13 +12,18 @@ def NewsCard(column, index, article):
     thumbnail_url = article.get("thumbnail_url")
     
     detail_data = dict(headline=headline, thumbnail_url=thumbnail_url)
-    
+
+    col_summary, col_favorite = st.columns([3,1])
+    with col_summary:
+        st.button(
+            'Read summary',
+            key=index,
+            on_click=card_detail,
+            kwargs=detail_data,
+            help="See summary and key takeaways")
+    with col_favorite:
+        st.button(':star:', key=f'{index}-favorite', help="Save in favorites")
+
     card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.markdown(f"![Image - {headline}]({thumbnail_url})")
     card.markdown(f"### {headline}")
-    st.button(
-        'Read summary',
-        key=index,
-        on_click=card_detail,
-        kwargs=detail_data,
-        help="See summary and key takeaways")
