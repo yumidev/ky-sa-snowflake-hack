@@ -17,7 +17,6 @@ def show_page():
     Navbar()
     
     st.title("Bellman AI")
-
     if "articles" not in st.session_state:
         with st.spinner("Loading your AI news..."):
             curated_articles = load_most_recent_articles()
