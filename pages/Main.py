@@ -16,9 +16,12 @@ def show_page():
     Navbar()
     
     st.title("Bellman AI")
-    
-    with st.spinner("Loading your AI news..."):
-        curated_articles = load_most_recent_articles()
+
+    if "articles" not in st.session_state:
+        with st.spinner("Loading your AI news..."):
+            curated_articles = load_most_recent_articles()
+        st.session_state["articles"] = curated_articles
 
     CategoryFilter()
-    NewsGrid(curated_articles)
+
+    NewsGrid()
