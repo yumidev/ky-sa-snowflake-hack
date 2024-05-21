@@ -15,8 +15,6 @@ def preprocess_card_detail(article, index):
 def NewsCard(column, index, article):
     headline = article.get("headline")
     thumbnail_url = article.get("thumbnail_url")
-    
-    
     col_summary, col_favorite = st.columns([3,1])
 
     with col_summary:
