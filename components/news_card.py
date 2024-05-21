@@ -28,9 +28,9 @@ def get_favorite_button_icon(article_headline):
     if "favorites" not in st.session_state:
         st.session_state.favorites = []
     if article_headline in st.session_state.favorites:
-        return "☆"
-    else:
         return ":star:"
+    else:
+        return "☆"
 
 def get_help_text(article_headline):
     if "favorites" not in st.session_state:
