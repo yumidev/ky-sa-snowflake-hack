@@ -5,6 +5,7 @@ This module contains the code for the view aspects of the main page.
 import streamlit as st
 from components.nav import Navbar
 from components.news_grid import NewsGrid
+from components.filter import CategoryFilter
 from controllers.db_handler import get_most_recent
 
 @st.cache_data(show_spinner=False)
@@ -19,4 +20,5 @@ def show_page():
     with st.spinner("Loading your AI news..."):
         curated_articles = load_most_recent_articles()
 
+    CategoryFilter()
     NewsGrid(curated_articles)

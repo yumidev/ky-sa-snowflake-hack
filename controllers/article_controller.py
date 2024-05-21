@@ -13,6 +13,15 @@ from utils.selenium_handler import get_selenium_driver
 
 driver = None
 
+CATEGORIES = [
+    "Business",
+    "Innovation",
+    "Chatbots",
+    "Government Policy",
+    "Security", 
+    "Ethics & Society",
+]
+
 article_prompts = {
     "ai_summarize": f"""
     You are a news reading assistant.
@@ -69,18 +78,9 @@ def set_categories(articles:list[NewsArticle]) -> None:
 
     The categories are set by reference.
     """
-
-    CATEGORIES = [
-        "Business",
-        "Innovation",
-        "Chatbots",
-        "Government Policy",
-        "Security", 
-        "Ethics & Society",
-    ]
     
     # Concatenate headline and summary to give the model more material to calculate similarity
-    headlines = [article.headline + ": " + article.summary for article in articles]
+    headlines = [article["headline"] + ": " + article["summary"]for article in articles]
 
     relevance_scores = get_class_relevance_scores(CATEGORIES, headlines)
 
@@ -88,7 +88,7 @@ def set_categories(articles:list[NewsArticle]) -> None:
     for i, query_scores in enumerate(relevance_scores):
         largest_index = np.argmax(query_scores)
 
-        articles[i].category = CATEGORIES[largest_index]
+        articles[i]["category"] = CATEGORIES[largest_index]
 
 
 def articles_list_to_dataframe(articles):
