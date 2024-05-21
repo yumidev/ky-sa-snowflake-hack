@@ -16,8 +16,16 @@ def NewsCard(column, index, article):
     headline = article.get("headline")
     thumbnail_url = article.get("thumbnail_url")
     
-    card = column.container(height=CARD_HEIGHT, border=False)
+    
+    col_summary, col_favorite = st.columns([3,1])
+
+    with col_summary:
+        if st.button("View", key=index, help="See summary and key takeaways"):
+            preprocess_card_detail(article, index)
+    with col_favorite:
+        st.button(':star:', key=f'{index}-favorite', help="Save in favorites")
+
+    card = column.container(height=CARD_HEIGHT, border=False) #creates a new container in the column
     card.markdown(f"![Image - {headline}]({thumbnail_url})")
     card.markdown(f"### {headline}")
-    if st.button("View", key=index, help="See summary and key takeaways"):
-        preprocess_card_detail(article, index)
+
