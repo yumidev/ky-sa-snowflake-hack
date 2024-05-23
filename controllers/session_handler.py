@@ -17,4 +17,3 @@ connection_parameters = {
  }
 
 session = Session.builder.configs(connection_parameters).create()
-

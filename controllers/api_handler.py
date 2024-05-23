@@ -67,7 +67,6 @@ def get_articles_from_guardian():
 
     return articles
 
-
 def get_articles_from_nyt():
     DOMAIN_NAME = "https://api.nytimes.com"
 
@@ -97,7 +96,6 @@ def get_articles_from_nyt():
         articles.append(article)
     
     return articles
-
 
 def get_rss_feed_data(source_name, url):
     feed = feedparser.parse(url)
