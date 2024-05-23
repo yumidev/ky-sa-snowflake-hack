@@ -161,10 +161,7 @@ def _get_article_content_thru_beatifulsoup(article):
     except Exception as e:
         return None
     
-
-
     return ValueError
-
 
 def get_article_content(article):
     global driver
@@ -195,7 +192,6 @@ def get_article_content(article):
             method_name = method_names[i]
 
     return (article_content, method_name)
-
 
 def get_ai_text(article_content, chosen_prompt=article_prompts["ai_summarize"]):
     return get_cortex_response(article_content, chosen_prompt)

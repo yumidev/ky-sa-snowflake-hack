@@ -61,5 +61,3 @@ def get_class_relevance_scores(sentences:list[str], eval_classes:list) -> ndarra
         scores =  np.matmul(query_embeddings, embeddings.T)
 
     return scores
-
-
